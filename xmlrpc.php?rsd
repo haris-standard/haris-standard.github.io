@@ -1,0 +1,17 @@
+<br />
+<b>Warning</b>:  Constant WP_DEBUG already defined, this will be an error in PHP 9 in <b>/Users/harrisonsugrue/Downloads/unbosi/wp-config.php</b> on line <b>108</b><br />
+<?xml version="1.0" encoding="UTF-8"?><rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd">
+	<service>
+		<engineName>WordPress</engineName>
+		<engineLink>https://wordpress.org/</engineLink>
+		<homePageLink>/</homePageLink>
+		<apis>
+			<api name="WordPress" blogID="1" preferred="true" apiLink="/xmlrpc.php" />
+			<api name="Movable Type" blogID="1" preferred="false" apiLink="/xmlrpc.php" />
+			<api name="MetaWeblog" blogID="1" preferred="false" apiLink="/xmlrpc.php" />
+			<api name="Blogger" blogID="1" preferred="false" apiLink="/xmlrpc.php" />
+				<api name="WP-API" blogID="1" preferred="false" apiLink="/wp-json/" />
+			</apis>
+	</service>
+</rsd>
+	
