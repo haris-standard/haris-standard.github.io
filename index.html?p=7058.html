@@ -291,42 +291,41 @@ display: none !important
     .unbosi-form-row.half + .unbosi-form-row.half { margin-left: 0; }
   }
   </style>
-  <script>
+    <script>
   (function() {
     var form = document.querySelector('.unbosi-form');
     if (!form) return;
     var status = form.querySelector('.unbosi-form-status');
     var button = form.querySelector('.unbosi-form-submit');
-    function setStatus(message, ok) {
+    function setStatus(message) {
       if (!status) return;
       status.textContent = message || '';
-      status.className = 'unbosi-form-status' + (ok ? ' ok' : '');
+      status.className = 'unbosi-form-status';
     }
-    if (window.location.search.indexOf('sent=1') !== -1) {
-      setStatus('Thanks! We received your request.', true);
+    function buildMailto(data) {
+      var subject = 'Send Marbles form submission';
+      var lines = [
+        'Form: Send Marbles',
+        'Their First Name: ' + (data.get('their_first_name') || ''),
+        'Their Last Name: ' + (data.get('their_last_name') || ''),
+        'Their POSTAL Address (to send marbles!): ' + (data.get('their_postal_address') || ''),
+        'Your Email: ' + (data.get('your_email') || ''),
+        'State the reason they need marbles?: ' + (data.get('reason') || ''),
+        'Message you would like to include: ' + (data.get('message') || ''),
+        'What is your name?: ' + (data.get('your_name') || '')
+      ];
+      var body = lines.join('
+');
+      return 'mailto:hello@bureauofsillyideas.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     }
     form.addEventListener('submit', function(event) {
-      if (!window.fetch || !window.URLSearchParams || !window.FormData) return;
       event.preventDefault();
+      var data = new FormData(form);
+      if ((data.get('hp') || '').length > 0) return;
       if (button) button.disabled = true;
-      setStatus('Sending...', false);
-      var data = new URLSearchParams(new FormData(form));
-      fetch(form.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: data.toString()
-      }).then(function(response) {
-        if (response.ok) {
-          form.reset();
-          setStatus('Thanks! We received your request.', true);
-        } else {
-          setStatus('Sorry, there was a problem. Please try again.', false);
-        }
-      }).catch(function() {
-        setStatus('Sorry, there was a problem. Please try again.', false);
-      }).finally(function() {
-        if (button) button.disabled = false;
-      });
+      setStatus('Opening your email app...');
+      window.location.href = buildMailto(data);
+      if (button) button.disabled = false;
     });
   })();
   </script>
