@@ -223,7 +223,7 @@ display: none !important
 </div>
 </div></div></div></div></div><div id="pg-7058-1"  class="panel-grid panel-no-style" ><div id="pgc-7058-1-0"  class="panel-grid-cell" ><div id="panel-7058-1-0-0" class="widget_text so-panel widget widget_custom_html panel-first-child panel-last-child" data-index="2" ><div class="textwidget custom-html-widget">
   <div class="unbosi-form-wrap">
-    <form class="unbosi-form" action="mailto:hello@bureauofsillyideas.com" method="post" enctype="text/plain" accept-charset="UTF-8">
+    <form class="unbosi-form" action="#" method="post" accept-charset="UTF-8">
       <input type="hidden" name="form_name" value="Send Marbles">
       <div class="unbosi-form-row half">
         <label>Their First Name <span class="req">*</span>
@@ -291,7 +291,7 @@ display: none !important
     .unbosi-form-row.half + .unbosi-form-row.half { margin-left: 0; }
   }
   </style>
-    <script>
+      <script>
   (function() {
     var form = document.querySelector('.unbosi-form');
     if (!form) return;
@@ -318,15 +318,18 @@ display: none !important
 ');
       return 'mailto:hello@bureauofsillyideas.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     }
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+    function handleSubmit(event) {
+      if (event) event.preventDefault();
+      if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
       var data = new FormData(form);
       if ((data.get('hp') || '').length > 0) return;
       if (button) button.disabled = true;
       setStatus('Opening your email app...');
       window.location.href = buildMailto(data);
       if (button) button.disabled = false;
-    });
+    }
+    form.addEventListener('submit', handleSubmit);
+    if (button) button.addEventListener('click', handleSubmit);
   })();
   </script>
 </div></div></div></div></div></div>	</div>
